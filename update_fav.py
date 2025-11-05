@@ -1,35 +1,42 @@
 import requests
 import re
-import os
 
-# Archivos
-TEMPLATE = "corto.m3u"
-OUTPUT = "favoritos.m3u"
 SOURCE_URL = "https://iptv-org.github.io/iptv/countries/es.m3u"
+OUTPUT_FILE = "favoritos.m3u"
 
-def extract_channel_names(filepath):
-    names = set()
-    with open(filepath, 'r', encoding='utf-8') as f:
-        for line in f:
-            line = line.strip()
-            if line.startswith('#EXTINF'):
-                # Extraer el nombre después de la última coma
-                if ',' in line:
-                    name = line.split(',', 1)[1].strip()
-                    names.add(name)
-    return names
+# Orden deseado (usa nombres tal como aparecen en la lista oficial)
+PREFERRED_ORDER = [
+    "La 1",
+    "La 2",
+    "TVG",
+    "Antena 3",
+    "Telecinco",
+    "La Sexta",
+    "Cuatro",
+    "24H",
+    "nova",
+    "Neox",
+    "Divinity",
+    "Veo",
+    "Trece",
+    "Real Madrid TV",
+    "A3Series"
+]
 
-def parse_m3u(content):
+def parse_m3u_with_metadata(content):
+    """Parsea el M3U y extrae (nombre, extinf_line, url) manteniendo metadatos completos."""
     lines = content.strip().splitlines()
     channels = []
     i = 0
     while i < len(lines):
-        if lines[i].startswith('#EXTINF'):
+        line = lines[i].strip()
+        if line.startswith('#EXTINF'):
             if i + 1 < len(lines):
-                extinf = lines[i]
-                url = lines[i + 1]
+                url = lines[i + 1].strip()
+                extinf = line
+                # Extraer nombre: todo después de la última coma
                 name = extinf.split(',', 1)[1] if ',' in extinf else ''
-                channels.append((name.strip(), extinf, url))
+                channels.append((name, extinf, url))
                 i += 2
             else:
                 i += 1
@@ -37,34 +44,69 @@ def parse_m3u(content):
             i += 1
     return channels
 
-def main():
-    # Cargar nombres deseados
-    desired_names = extract_channel_names(TEMPLATE)
-    print(f"Canales deseados: {len(desired_names)}")
+def normalize_name(name):
+    """Normaliza el nombre para comparación flexible (opcional: ajusta según necesidad)"""
+    return name.strip().lower()
 
-    # Descargar lista completa
-    print("Descargando es.m3u...")
+def main():
+    print("Descargando lista oficial de España...")
     resp = requests.get(SOURCE_URL)
     resp.raise_for_status()
-    full_list = resp.text
+    resp.encoding = 'utf-8'
+    full_content = resp.text
 
-    # Parsear
-    all_channels = parse_m3u(full_list)
+    # Parsear todos los canales
+    all_channels = parse_m3u_with_metadata(full_content)
+    print(f"Total de canales encontrados: {len(all_channels)}")
 
-    # Filtrar
-    matched = []
+    # Crear un mapa de nombres normalizados -> lista de coincidencias (por si hay duplicados)
+    name_map = {}
     for name, extinf, url in all_channels:
-        if name in desired_names:
-            matched.append(extinf)
-            matched.append(url)
+        norm = normalize_name(name)
+        if norm not in name_map:
+            name_map[norm] = []
+        name_map[norm].append((name, extinf, url))
 
-    # Guardar
-    with open(OUTPUT, 'w', encoding='utf-8') as f:
+    # Paso 1: Buscar los canales prioritarios
+    prioritized = []
+    used_urls = set()
+
+    for target in PREFERRED_ORDER:
+        norm_target = normalize_name(target)
+        found = False
+        # Buscar coincidencia exacta o parcial
+        for norm_name in name_map:
+            if norm_target in norm_name or norm_name in norm_target:
+                for entry in name_map[norm_name]:
+                    _, extinf, url = entry
+                    if url not in used_urls:
+                        prioritized.append((extinf, url))
+                        used_urls.add(url)
+                        found = True
+                        break
+                if found:
+                    break
+        if not found:
+            print(f"Advertencia: no se encontró '{target}' en la lista.")
+
+    # Paso 2: Añadir el resto de los canales (en orden original, sin repetidos)
+    rest = []
+    for name, extinf, url in all_channels:
+        if url not in used_urls:
+            rest.append((extinf, url))
+            used_urls.add(url)
+
+    # Combinar: priorizados + resto
+    final_channels = prioritized + rest
+
+    # Guardar archivo
+    with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
         f.write("#EXTM3U\n")
-        f.write("\n".join(matched))
-        f.write("\n")
+        for extinf, url in final_channels:
+            f.write(extinf + "\n")
+            f.write(url + "\n")
 
-    print(f"Guardado {OUTPUT} con {len(matched)//2} canales.")
+    print(f"Guardado {OUTPUT_FILE} con {len(final_channels)} canales.")
 
 if __name__ == "__main__":
     main()
