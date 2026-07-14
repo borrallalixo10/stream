@@ -532,7 +532,7 @@ https://rtvelivestream.rtve.es/rtvesec/rne/rne_para_todos_main.m3u8
 #EXTINF:-1 tvg-id="ROTVValencia.es@SD" tvg-logo="https://i.imgur.com/0TDnVQ4.png" group-title="Entertainment",ROTV Valencia (720p)
 https://rotv.romediavalencia.com:3839/live/rotvlive.m3u8
 #EXTINF:-1 tvg-id="RTenEspanol.ru@SD" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Russia-today-logo.svg/960px-Russia-today-logo.svg.png" group-title="News",RT en Espanol (1080p)
-http://179.60.51.134:8888/RT/index.m3u8
+http://177.234.249.135:8888/RT/index.m3u8
 #EXTINF:-1 tvg-id="RTVManilva.es@SD" tvg-logo="https://i.imgur.com/zKgrnXx.png" http-referrer="https://player.castr.com/live_e2ae1780dc2a11eca660b7b17b7952a5" group-title="General",RTV Manilva (1080p) [Not 24/7]
 #EXTVLCOPT:http-referrer=https://player.castr.com/live_e2ae1780dc2a11eca660b7b17b7952a5
 #EXTINF:-1 tvg-id="RadioTelevisionMarbella.es@SD" tvg-logo="https://i.imgur.com/o9Ro8TR.png" group-title="Undefined",RTV Marbella (720p)
