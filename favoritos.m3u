@@ -223,7 +223,7 @@ https://cdn1.etbon.eus/etb2/index.m3u8
 https://cdn1.etbon.eus/etb2on/index.m3u8
 #EXTINF:-1 tvg-id="ETBEvents1.es@SD" tvg-logo="https://i.imgur.com/bVUEmx9.png" group-title="General;Public",ETB Events 1 (1080p)
 https://cdn1.etbon.eus/oc1/index.m3u8
-#EXTINF:-1 tvg-id="EWTN.us@SpainLatinAmerica" tvg-logo="https://i.imgur.com/sua70RO.png" group-title="Religious",EWTN (United States) Spain & Latin America (720p)
+#EXTINF:-1 tvg-id="EWTN.us@SpainLatinAmerica" tvg-logo="https://play-lh.googleusercontent.com/3716tvZCgzpIt-X1giV8jKwCdC8zwOI4eMUfO_ETWzNX6eGKIi2RiUK9a_fr6BCzjw" group-title="Religious",EWTN (United States) Spain & Latin America (720p)
 https://cdn3.wowza.com/1/SmVrQmZCUXZhVDgz/b3J3MFJv/hls/live/playlist.m3u8
 #EXTINF:-1 tvg-id="EWTNEspana.es@SD" tvg-logo="https://i.imgur.com/KvpMbkd.png" group-title="Religious",EWTN Espana
 https://cdn3.wowza.com/1/SmVrQmZCUXZhVDgz/b3J3MFJv/hls/q6xkg9py/480/chunklist.m3u8
