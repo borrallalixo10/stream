@@ -183,8 +183,6 @@ https://limited31.todostreaming.es/live/noroestetv-livestream.m3u8
 https://jmp2.uk/plu-64ddcbb14c5ed80008fad416.m3u8
 #EXTINF:-1 tvg-id="CurroJimenez.us@Spain" tvg-logo="https://i.imgur.com/e3biTY5.png" group-title="Series",Curro Jimenez
 https://jmp2.uk/plu-5f1acd36779de70007a680d1.m3u8
-#EXTINF:-1 tvg-id="DeportesporMovistarPlusPlus.es@SD" tvg-logo="" http-user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 VLC/3.0.21 LibVLC/3.0.21" group-title="Sports",Deportes por Movistar Plus+
-#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 VLC/3.0.21 LibVLC/3.0.21
 #EXTINF:-1 tvg-id="DetectiveConan.us@Spain" tvg-logo="https://images.pluto.tv/channels/629a066860ef810008267b70/solidLogoPNG.png?w=512" group-title="Animation;Kids",Detective Conan
 https://jmp2.uk/plu-629a066860ef810008267b70.m3u8
 #EXTINF:-1 tvg-id="DiezTVLasVillas.es@SD" tvg-logo="https://i.imgur.com/QTA40lP.png" group-title="General",Diez TV Las Villas (1080p)
